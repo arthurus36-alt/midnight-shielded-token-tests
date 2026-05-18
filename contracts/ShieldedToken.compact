@@ -1,0 +1,14 @@
+export contract ShieldedToken {
+  export circuit mintShielded(to: ZkPublicKey, amount: Uint<64>): void {
+    let newNonce = evolveNonce();
+    mintShieldedToken(to, amount, newNonce);
+  }
+
+  export circuit transferShielded(to: ZkPublicKey, amount: Uint<64>): ShieldedSendResult {
+    return sendShielded(to, amount);
+  }
+
+  export circuit burnShielded(amount: Uint<64>): void {
+    sendImmediateShielded(shieldedBurnAddress(), amount);
+  }
+}
